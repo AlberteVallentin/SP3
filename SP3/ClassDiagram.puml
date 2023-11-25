@@ -1,0 +1,116 @@
+@startuml
+!pragma layout smetana
+
+class UserMenu
+class Movies
+class Series
+class User
+class Main
+class FileIO
+class TextUI
+class Streaming
+
+Main o-- Streaming
+Streaming o-- UserMenu
+UserMenu o-- User
+
+UserMenu o-- TextUI
+Streaming o-- FileIO
+UserMenu o-- FileIO
+
+
+Streaming o-- Movies
+Streaming o-- Series
+
+
+
+
+class Main{
+  + static void main(string [] args)
+}
+
+class Streaming{
+  - int chosenMedia
+  - String usrName
+  - int input
+  - String textInput
+  - String fileName
+  - int count
+  - boolean movieChosen
+  UserMenu userMenu
+  User user
+  TextUI ui
+  ArrayList<Movie> movies
+  ArrayList<Serie> series
+  + void streamingSetup()
+  + void createNewAccountOrLogin()
+  + void login()
+  + void chooseWhatToBrowse()
+  + void chooseMedia()
+  + void chooseWhatToDoWithChosenMedia()
+  + void addToWatchedMovies(User user)
+  + void addToWatchedSeries(User user)
+  + void addToSavedMovies(User user)
+  + void addToSavedSeries(User user)
+  + void searchByCategorySeries()
+  + void searchByCategoryMovies()
+  + void endOfStreamLoop()
+}
+
+class TextUI{
+  - Scanner scanner
+  + String getInput(String msg)
+  + void displayMessage(String msg)
+  + int getNumericInput(String msg)
+  + String getChoice(ArrayList<String> options, String msg)
+}
+
+class FileIO{
+  ArrayList<Movie> movies
+  ArrayList<Serie> series
+  + ArrayList<Movie> readMovieData(String path)
+  + ArrayList<Serie> readSeriesData(String path)
+}
+
+class UserMenu{
+  - Map<String, String> userCredentials
+  String userName
+  String passWord
+  - TextUI ui
+  - FileIO io
+  + boolean userLogIn(String userName, String passWord)
+  + void createAccount()
+  - boolean userNameTaken(String userName)
+  - static void saveUserData(Map<String, String> userCredentials, String path)
+}
+
+class User {
+  - String userName
+  - String password
+  - ArrayList<Movie> watchedListMovies
+  - ArrayList<Movie> savedListMovies
+  - ArrayList<Serie> watchedListSeries
+  - ArrayList<Serie> savedListSeries
+}
+
+class Movie {
+  - String title
+  - int year
+  - String categories
+  - double rating
+  + void displayDetails()
+  + void toString()
+}
+
+class Serie {
+  - String title
+  - int yearFrom
+  - String yearTo
+  - String categories
+  - double rating
+  + void displayDetails()
+  + void toString()
+}
+
+
+@enduml

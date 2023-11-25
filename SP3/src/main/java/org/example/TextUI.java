@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class TextUI {
     private Scanner scan = new Scanner(System.in);
 
-    //shows a message and returns the user's input as a String
+    //Shows a message and returns the user's input as a String
     public String getInput(String msg){
         this.displayMessage(msg);
         return scan.nextLine();
@@ -18,53 +18,41 @@ public class TextUI {
     }
 
 
+    // Get numeric input from the user with a given message
     public int getNumericInput(String msg){
-        System.out.println(msg);//Stille brugeren et spørgsmål
+        System.out.println(msg);
 
-        // int input = scan.nextInt();
-        // This is ok, but BEWARE OF THE SCANNERBUG: When using nextInt() right before nextLine(): the nextLine call will be skipped...
-        // fix this by simply calling nextLine() once before you actually need it
-        // Another fix: read it as string, then parse it:
+        // Read user input as a string to avoid Scanner bug
+        String input = scan.nextLine();          // Provide users a place to enter their response and wait for it
 
-        String input = scan.nextLine();          //Give brugere et sted at placere sit svar og vente på svaret
         int num = 0;
         try {
-            num = Integer.parseInt(input);       //Konvertere svaret til et tal
-
-        }catch (NumberFormatException e){
+            // Parse the input string to an integer
+            num = Integer.parseInt(input);       // Convert the user's response to a number
+        } catch (NumberFormatException e) {
+            // Handle the case where the input is not a valid integer
             System.out.println("This was not a number, try again.");
+            // Recursively call getNumericInput to get a valid input
             num = getNumericInput(msg);
-
         }
         return num;
-
     }
-    /*
-     *
-     * ' shows a message, lists the content of a list and returns the user's choice
-     * */
+
+    // Get user choice from a list of options with a given message
     public String getChoice(ArrayList<String> options, String msg){
         System.out.println(msg);
-        //  diplayMenu(options);
-        String input = getInput("");
 
-        //tjek om input findes i listen, hvis ikke, smid en exception
+        // Get user input as a string
+        String input = getInput(""); // Assuming that there is a method named getInput which is being called here
+
+        // Check if the input is in the list of options, if not, prompt the user again
         if(!options.contains(input)){
-            System.out.println("findes ikke på listen");
+            System.out.println("Does not exist in the list");
+            // Recursively call getChoice to get a valid input
             input = getChoice(options, msg);
         }
 
         return input;
-    }
-
-
-    public void diplayMenu(ArrayList<String> options) {
-
-        for(int i = 0; i <options.size();i++){
-
-            System.out.println(options.get(i));
-        }
-
     }
 }
 

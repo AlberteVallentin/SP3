@@ -15,25 +15,11 @@ public class UserMenu {
     // Static instance of TextUI for handling user input/output
     static TextUI ui = new TextUI();
 
-    // ArrayList to store User objects (not used in the provided code)
-    private ArrayList<User> users;
-
     // Map to store user credentials (username, password)
     protected Map<String, String> userCredentials;
-
-    // Variables to store user input (username and password)
     String userName;
     String passWord;
 
-
-    public void runUserSetupDialog() {
-        // Implementation details can be added here
-    }
-
-
-    public void displayUsers() {
-        // Implementation details can be added here
-    }
 
     // Method to check user login credentials
     public boolean userLogIn(String userName, String passWord) {
@@ -62,11 +48,6 @@ public class UserMenu {
             System.out.println("Runtime exception...");
             throw new RuntimeException(e);
         }
-    }
-
-
-    public void logOut() {
-        // Implementation details can be added here
     }
 
     // Method to create a new user account
@@ -156,13 +137,5 @@ public class UserMenu {
         }
     }
 
-
-    public void playMedia() {
-        // Implementation details can be added here
-    }
-
-    public void deleteSavedMedia() {
-
-    }
 }
 

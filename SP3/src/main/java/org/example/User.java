@@ -6,7 +6,6 @@ public class User {
     private String passWord;
     private ArrayList<Movie> watchedListMovies = new ArrayList<>();
     private ArrayList<Movie> savedListMovies = new ArrayList<>();
-
     private ArrayList<Serie> watchedListSeries = new ArrayList<>();
     private ArrayList<Serie> savedListSeries = new ArrayList<>();
 
@@ -21,10 +20,12 @@ public class User {
     }
 
     public String getUserName() {
+
         return userName;
     }
 
     public String getPassWord() {
+
         return passWord;
     }
 
@@ -43,6 +44,7 @@ public class User {
         return savedListMovies;
     }
     public ArrayList<Serie> getSavedListSeries() {
+
         return savedListSeries;
     }
 }
