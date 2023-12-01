@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class FileIO {
+public class FileIO implements IO {
     ArrayList<Movie> movies = new ArrayList<>();
     ArrayList<Serie> series = new ArrayList<>();
 
