@@ -27,10 +27,11 @@ public class Streaming {
 
     // Method to set up initial streaming configuration
     public void streamingSetup(){
-        FileIO io = new FileIO();
+        IO fileio = new FileIO();
+        IO io = new DBConnector();
 
-        movies = io.readMovieData("MediaFiles/100bedstefilm.txt");
-        series = io.readSeriesData("MediaFiles/100bedsteserier.txt");
+        movies = fileio.readMovieData("MediaFiles/100bedstefilm.txt");
+        series = fileio.readSeriesData("MediaFiles/100bedsteserier.txt");
 
         System.out.println("Hi!");
         System.out.println("Welcome to AAAM's streaming service - Please choose an option to continue: ");
