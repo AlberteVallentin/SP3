@@ -16,6 +16,68 @@ public class DBConnector implements IO {
     ArrayList<Movie> movies = new ArrayList<>();
     ArrayList<Serie> series = new ArrayList<>();
 
+    public ArrayList<Movie> readMovieData(String path) {
+        ArrayList<Movie> movies = new ArrayList<>();
+
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            // STEP 1: Register JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // STEP 2: Open a connection
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // STEP 3: Execute a query
+            System.out.println("Creating statement...");
+            String serieQuery = "SELECT name, genre, year, rating FROM my_streaming.movie WHERE MOVIEID BETWEEN 1 and 99";
+            stmt = conn.prepareStatement(serieQuery);
+
+            ResultSet rs = stmt.executeQuery(serieQuery);
+
+            // STEP 4: Extract data from result set and populate Serie objects
+            while (rs.next()) {
+                // Retrieve by column name
+                String title = rs.getString("name");
+                String categories = rs.getString("genre");
+                double rating = rs.getDouble("rating");
+                int year = rs.getInt("year");
+
+                // Create a Movie object using the extracted information and add it to the list
+                Movie movie = new Movie(title, year, categories, rating);
+                movies.add(movie);
+            }
+
+            // STEP 5: Clean-up environment
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException se) {
+            // Handle errors for JDBC
+            se.printStackTrace();
+        } catch (Exception e) {
+            // Handle errors for Class.forName
+            e.printStackTrace();
+        } finally {
+            // finally block used to close resources
+            try {
+                if (stmt != null)
+                    stmt.close();
+            } catch (SQLException se2) {
+            } // nothing we can do
+            try {
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            } // end finally try
+        } // end try
+
+        return movies;
+    }
+
     public ArrayList<Serie> readSeriesData(String path) {
         ArrayList<Serie> series = new ArrayList<>();
 
