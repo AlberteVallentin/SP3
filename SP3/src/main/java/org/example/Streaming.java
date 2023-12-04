@@ -21,17 +21,29 @@ public class Streaming {
     TextUI ui = new TextUI();
     private int count = 0;
     User user;
+    boolean readFromDB = true;
     ArrayList<Movie> movies = new ArrayList<>();
     ArrayList<Serie> series = new ArrayList<>();
-
+    IO io;
+    String pathMovie;
+    String pathSerie;
 
     // Method to set up initial streaming configuration
     public void streamingSetup(){
-        IO fileio = new FileIO();
-        IO io = new DBConnector();
 
-        movies = fileio.readMovieData("MediaFiles/100bedstefilm.txt");
-        series = fileio.readSeriesData("MediaFiles/100bedsteserier.txt");
+        if (readFromDB){
+            io = new DBConnector();
+            pathMovie = "jdbc:mysql://localhost/my_streaming";
+            pathSerie = "jdbc:mysql://localhost/my_streaming";
+        } else {
+            io = new FileIO();
+            pathMovie = "MediaFiles/100bedstefilm.txt";
+            pathSerie = "MediaFiles/100bedsteserier.txt";
+        }
+
+
+        movies = io.readMovieData(pathMovie);
+        series = io.readSeriesData(pathSerie);
 
         System.out.println("Hi!");
         System.out.println("Welcome to AAAM's streaming service - Please choose an option to continue: ");

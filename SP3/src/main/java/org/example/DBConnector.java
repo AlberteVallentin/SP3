@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DBConnector implements IO {
-    static final String DB_URL = "jdbc:mysql://localhost/my_streaming";
+    static String DB_URL;
 
     //  Database credentials
     static final String USER = "root";
@@ -17,6 +17,7 @@ public class DBConnector implements IO {
     ArrayList<Serie> series = new ArrayList<>();
 
     public ArrayList<Movie> readMovieData(String path) {
+        DB_URL = path;
         ArrayList<Movie> movies = new ArrayList<>();
 
         Connection conn = null;
@@ -43,7 +44,7 @@ public class DBConnector implements IO {
                 String title = rs.getString("name");
                 String categories = rs.getString("genre");
                 double rating = rs.getDouble("rating");
-                int year = rs.getInt("year");
+                int year = Integer.parseInt(rs.getString("year").trim());
 
                 // Create a Movie object using the extracted information and add it to the list
                 Movie movie = new Movie(title, year, categories, rating);
@@ -79,6 +80,7 @@ public class DBConnector implements IO {
     }
 
     public ArrayList<Serie> readSeriesData(String path) {
+        DB_URL = path;
         ArrayList<Serie> series = new ArrayList<>();
 
         Connection conn = null;
@@ -108,7 +110,7 @@ public class DBConnector implements IO {
                 double rating = rs.getDouble("rating");
                 String yearToAndFrom = rs.getString("yearToAndFrom");
                 String[] years = yearToAndFrom.split("-");
-                int yearFrom = Integer.parseInt(years[0]);
+                int yearFrom = Integer.parseInt(years[0].trim());
                 String yearTo = (years.length > 1) ? years[1] : "still running";
 
                 // Parse and add each season to the list
